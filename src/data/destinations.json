@@ -1,0 +1,424 @@
+{
+  "destinations": [
+    {
+      "destination_id": "beijing",
+      "name": "Beijing",
+      "name_cn": "北京",
+      "interest_tags": [
+        "Ancient History & Culture",
+        "Museums & Exhibitions",
+        "Modern Architecture & City Life",
+        "Food & Culinary Experiences"
+      ],
+      "primary_cluster": "historical_cultural",
+      "min_recommended_stay_days": 3.0,
+      "transport_hub_tier": "major",
+      "best_seasons": ["spring", "fall"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "very_high",
+      "role_options": ["anchor", "culture"],
+      "base_description": "China's capital blending 3,000 years of imperial heritage with modern dynamism, home to the Forbidden City, Great Wall, and cutting-edge architecture.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1200"
+    },
+    {
+      "destination_id": "shanghai",
+      "name": "Shanghai",
+      "name_cn": "上海",
+      "interest_tags": [
+        "Modern Architecture & City Life",
+        "Shopping & Markets",
+        "Food & Culinary Experiences",
+        "Nightlife & Entertainment"
+      ],
+      "primary_cluster": "urban_modern",
+      "min_recommended_stay_days": 2.5,
+      "transport_hub_tier": "major",
+      "best_seasons": ["spring", "fall"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "very_high",
+      "role_options": ["anchor", "contrast"],
+      "base_description": "China's most cosmopolitan city, where futuristic skyscrapers meet colonial architecture along the historic Bund waterfront.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=1200"
+    },
+    {
+      "destination_id": "hong-kong",
+      "name": "Hong Kong",
+      "name_cn": "香港",
+      "interest_tags": [
+        "Modern Architecture & City Life",
+        "Food & Culinary Experiences",
+        "Shopping & Markets",
+        "Nightlife & Entertainment"
+      ],
+      "primary_cluster": "urban_modern",
+      "min_recommended_stay_days": 2.5,
+      "transport_hub_tier": "major",
+      "best_seasons": ["fall", "winter"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "very_high",
+      "role_options": ["anchor", "culture"],
+      "base_description": "A vibrant fusion of East and West where towering skyscrapers, bustling markets, and dim sum culture meet harbor views and mountain hiking trails.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=1200"
+    },
+    {
+      "destination_id": "guangzhou",
+      "name": "Guangzhou",
+      "name_cn": "广州",
+      "interest_tags": [
+        "Food & Culinary Experiences",
+        "Shopping & Markets",
+        "Modern Architecture & City Life",
+        "Ancient History & Culture"
+      ],
+      "primary_cluster": "urban_modern",
+      "min_recommended_stay_days": 2.0,
+      "transport_hub_tier": "major",
+      "best_seasons": ["fall", "winter", "spring"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "high",
+      "role_options": ["culture", "contrast"],
+      "base_description": "Southern China's culinary capital and trading hub, famous for authentic Cantonese cuisine, historic temples, and modern commercial districts.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1598857923686-4dd8d6eb7bf0?w=1200"
+    },
+    {
+      "destination_id": "shenzhen",
+      "name": "Shenzhen",
+      "name_cn": "深圳",
+      "interest_tags": [
+        "Modern Architecture & City Life",
+        "Shopping & Markets",
+        "Nightlife & Entertainment",
+        "Museums & Exhibitions"
+      ],
+      "primary_cluster": "urban_modern",
+      "min_recommended_stay_days": 1.5,
+      "transport_hub_tier": "major",
+      "best_seasons": ["fall", "winter", "spring"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "high",
+      "role_options": ["contrast", "recovery"],
+      "base_description": "China's Silicon Valley, transformed from fishing village to futuristic tech metropolis in 40 years, with innovative architecture and vibrant startup culture.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1595576508898-ebdebe934d45?w=1200"
+    },
+    {
+      "destination_id": "xian",
+      "name": "Xi'an",
+      "name_cn": "西安",
+      "interest_tags": [
+        "Ancient History & Culture",
+        "Museums & Exhibitions",
+        "Food & Culinary Experiences",
+        "Religious & Spiritual Sites"
+      ],
+      "primary_cluster": "historical_cultural",
+      "min_recommended_stay_days": 2.0,
+      "transport_hub_tier": "major",
+      "best_seasons": ["spring", "fall"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "very_high",
+      "role_options": ["culture", "anchor"],
+      "base_description": "Ancient capital of 13 dynasties, home to the legendary Terracotta Warriors and the starting point of the historic Silk Road.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1580541832626-2a7131ee809f?w=1200"
+    },
+    {
+      "destination_id": "hangzhou",
+      "name": "Hangzhou",
+      "name_cn": "杭州",
+      "interest_tags": [
+        "Natural Landscapes & Hiking",
+        "Ancient History & Culture",
+        "Photography & Scenic Views",
+        "Traditional Arts & Crafts"
+      ],
+      "primary_cluster": "natural_scenic",
+      "min_recommended_stay_days": 2.0,
+      "transport_hub_tier": "major",
+      "best_seasons": ["spring", "fall"],
+      "weather_risk_level": "low",
+      "crowd_level": "high",
+      "role_options": ["nature", "recovery"],
+      "base_description": "Celebrated for the poetic beauty of West Lake, ancient pagodas, and tea plantations, inspiring centuries of Chinese poets and artists.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1200"
+    },
+    {
+      "destination_id": "suzhou",
+      "name": "Suzhou",
+      "name_cn": "苏州",
+      "interest_tags": [
+        "Ancient History & Culture",
+        "Traditional Arts & Crafts",
+        "Photography & Scenic Views",
+        "Natural Landscapes & Hiking"
+      ],
+      "primary_cluster": "historical_cultural",
+      "min_recommended_stay_days": 1.5,
+      "transport_hub_tier": "regional",
+      "best_seasons": ["spring", "fall"],
+      "weather_risk_level": "low",
+      "crowd_level": "moderate",
+      "role_options": ["culture", "recovery"],
+      "base_description": "Venice of the East, renowned for exquisite classical gardens, ancient water towns, and centuries-old silk-weaving traditions.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1590850598735-33c93f8c5b66?w=1200"
+    },
+    {
+      "destination_id": "datong",
+      "name": "Datong",
+      "name_cn": "大同",
+      "interest_tags": [
+        "Ancient History & Culture",
+        "Religious & Spiritual Sites",
+        "Museums & Exhibitions",
+        "Photography & Scenic Views"
+      ],
+      "primary_cluster": "historical_cultural",
+      "min_recommended_stay_days": 1.5,
+      "transport_hub_tier": "regional",
+      "best_seasons": ["spring", "summer", "fall"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "low",
+      "role_options": ["culture", "contrast"],
+      "base_description": "Ancient capital housing the spectacular Yungang Grottoes, 1,500-year-old Buddhist cave temples carved into cliffsides with over 51,000 statues.",
+      "planning_effort_level": "Medium",
+      "image_url": "https://images.unsplash.com/photo-1599091506817-e347665dd949?w=1200"
+    },
+    {
+      "destination_id": "nanjing",
+      "name": "Nanjing",
+      "name_cn": "南京",
+      "interest_tags": [
+        "Ancient History & Culture",
+        "Museums & Exhibitions",
+        "Natural Landscapes & Hiking",
+        "Food & Culinary Experiences"
+      ],
+      "primary_cluster": "historical_cultural",
+      "min_recommended_stay_days": 2.0,
+      "transport_hub_tier": "major",
+      "best_seasons": ["spring", "fall"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "moderate",
+      "role_options": ["culture", "anchor"],
+      "base_description": "Former imperial capital with 2,500 years of history, blending Ming dynasty heritage, Republican-era architecture, and modern Chinese culture.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=1200"
+    },
+    {
+      "destination_id": "guilin",
+      "name": "Guilin",
+      "name_cn": "桂林",
+      "interest_tags": [
+        "Natural Landscapes & Hiking",
+        "Photography & Scenic Views",
+        "Adventure & Outdoor Activities",
+        "Ethnic Minorities & Local Culture"
+      ],
+      "primary_cluster": "natural_scenic",
+      "min_recommended_stay_days": 2.0,
+      "transport_hub_tier": "regional",
+      "best_seasons": ["spring", "fall"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "high",
+      "role_options": ["nature", "anchor"],
+      "base_description": "World-famous karst landscape of limestone peaks rising dramatically from the Li River, creating China's most iconic natural scenery.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1585934649421-33c77eebf38c?w=1200"
+    },
+    {
+      "destination_id": "yangshuo",
+      "name": "Yangshuo",
+      "name_cn": "阳朔",
+      "interest_tags": [
+        "Natural Landscapes & Hiking",
+        "Adventure & Outdoor Activities",
+        "Photography & Scenic Views",
+        "Ethnic Minorities & Local Culture"
+      ],
+      "primary_cluster": "natural_scenic",
+      "min_recommended_stay_days": 2.0,
+      "transport_hub_tier": "remote",
+      "best_seasons": ["spring", "fall"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "moderate",
+      "role_options": ["nature", "recovery"],
+      "base_description": "Idyllic riverside town surrounded by karst mountains, offering cycling through rice paddies, rock climbing, and traditional cormorant fishing.",
+      "planning_effort_level": "Medium",
+      "image_url": "https://images.unsplash.com/photo-1562739544-6d9bb9dd89c0?w=1200"
+    },
+    {
+      "destination_id": "lijiang",
+      "name": "Lijiang",
+      "name_cn": "丽江",
+      "interest_tags": [
+        "Ethnic Minorities & Local Culture",
+        "Ancient History & Culture",
+        "Natural Landscapes & Hiking",
+        "Photography & Scenic Views"
+      ],
+      "primary_cluster": "rural_traditional",
+      "min_recommended_stay_days": 2.5,
+      "transport_hub_tier": "regional",
+      "best_seasons": ["spring", "summer", "fall"],
+      "weather_risk_level": "low",
+      "crowd_level": "high",
+      "role_options": ["culture", "nature"],
+      "base_description": "UNESCO-listed ancient town of the Naxi ethnic minority, with cobblestone streets, wooden architecture, and snow-capped Jade Dragon Snow Mountain backdrop.",
+      "planning_effort_level": "Medium",
+      "image_url": "https://images.unsplash.com/photo-1590835158355-d8e39da8eab7?w=1200"
+    },
+    {
+      "destination_id": "dali",
+      "name": "Dali",
+      "name_cn": "大理",
+      "interest_tags": [
+        "Ethnic Minorities & Local Culture",
+        "Natural Landscapes & Hiking",
+        "Ancient History & Culture",
+        "Photography & Scenic Views"
+      ],
+      "primary_cluster": "rural_traditional",
+      "min_recommended_stay_days": 2.0,
+      "transport_hub_tier": "regional",
+      "best_seasons": ["spring", "summer", "fall"],
+      "weather_risk_level": "low",
+      "crowd_level": "moderate",
+      "role_options": ["culture", "recovery"],
+      "base_description": "Ancient Bai minority kingdom beside Erhai Lake, offering relaxed pace, traditional architecture, and dramatic Cangshan Mountain hiking.",
+      "planning_effort_level": "Medium",
+      "image_url": "https://images.unsplash.com/photo-1590834823768-dfc53508c7f1?w=1200"
+    },
+    {
+      "destination_id": "zhangjiajie",
+      "name": "Zhangjiajie",
+      "name_cn": "张家界",
+      "interest_tags": [
+        "Natural Landscapes & Hiking",
+        "Photography & Scenic Views",
+        "Adventure & Outdoor Activities",
+        "Ethnic Minorities & Local Culture"
+      ],
+      "primary_cluster": "natural_scenic",
+      "min_recommended_stay_days": 2.5,
+      "transport_hub_tier": "regional",
+      "best_seasons": ["spring", "summer", "fall"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "high",
+      "role_options": ["nature", "anchor"],
+      "base_description": "Otherworldly sandstone pillars rising over 200 meters, inspiring Avatar's floating mountains, with glass skywalks and cable car adventures.",
+      "planning_effort_level": "Medium",
+      "image_url": "https://images.unsplash.com/photo-1590850598735-33c93f8c5b66?w=1200"
+    },
+    {
+      "destination_id": "chengdu",
+      "name": "Chengdu",
+      "name_cn": "成都",
+      "interest_tags": [
+        "Food & Culinary Experiences",
+        "Ancient History & Culture",
+        "Museums & Exhibitions",
+        "Natural Landscapes & Hiking"
+      ],
+      "primary_cluster": "historical_cultural",
+      "min_recommended_stay_days": 2.5,
+      "transport_hub_tier": "major",
+      "best_seasons": ["spring", "fall"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "high",
+      "role_options": ["culture", "anchor"],
+      "base_description": "Laid-back capital of Sichuan province, famous for spicy cuisine, giant pandas, ancient teahouse culture, and nearby Buddhist mountain pilgrimages.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1590850598735-33c93f8c5b66?w=1200"
+    },
+    {
+      "destination_id": "chongqing",
+      "name": "Chongqing",
+      "name_cn": "重庆",
+      "interest_tags": [
+        "Food & Culinary Experiences",
+        "Modern Architecture & City Life",
+        "Natural Landscapes & Hiking",
+        "Nightlife & Entertainment"
+      ],
+      "primary_cluster": "urban_modern",
+      "min_recommended_stay_days": 2.0,
+      "transport_hub_tier": "major",
+      "best_seasons": ["spring", "fall"],
+      "weather_risk_level": "moderate",
+      "crowd_level": "high",
+      "role_options": ["culture", "contrast"],
+      "base_description": "Mountainous megacity built on steep hills where the Yangtze meets Jialing River, renowned for fiery hotpot and gateway to Three Gorges cruises.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1590850598735-33c93f8c5b66?w=1200"
+    },
+    {
+      "destination_id": "lhasa",
+      "name": "Lhasa",
+      "name_cn": "拉萨",
+      "interest_tags": [
+        "Religious & Spiritual Sites",
+        "Ethnic Minorities & Local Culture",
+        "Ancient History & Culture",
+        "Photography & Scenic Views"
+      ],
+      "primary_cluster": "rural_traditional",
+      "min_recommended_stay_days": 3.0,
+      "transport_hub_tier": "regional",
+      "best_seasons": ["summer", "fall"],
+      "weather_risk_level": "high",
+      "crowd_level": "moderate",
+      "role_options": ["culture", "nature"],
+      "base_description": "Spiritual heart of Tibetan Buddhism at 3,650m altitude, home to the sacred Potala Palace, Jokhang Temple, and profound pilgrimage culture.",
+      "planning_effort_level": "High",
+      "image_url": "https://images.unsplash.com/photo-1590850598735-33c93f8c5b66?w=1200"
+    },
+    {
+      "destination_id": "harbin",
+      "name": "Harbin",
+      "name_cn": "哈尔滨",
+      "interest_tags": [
+        "Ancient History & Culture",
+        "Photography & Scenic Views",
+        "Food & Culinary Experiences",
+        "Adventure & Outdoor Activities"
+      ],
+      "primary_cluster": "urban_modern",
+      "min_recommended_stay_days": 2.0,
+      "transport_hub_tier": "major",
+      "best_seasons": ["winter"],
+      "weather_risk_level": "high",
+      "crowd_level": "moderate",
+      "role_options": ["contrast", "culture"],
+      "base_description": "Ice City of the North, famous for world-class International Ice and Snow Sculpture Festival, Russian architecture, and extreme winter experiences.",
+      "planning_effort_level": "Medium",
+      "image_url": "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=1200"
+    },
+    {
+      "destination_id": "kunming",
+      "name": "Kunming",
+      "name_cn": "昆明",
+      "interest_tags": [
+        "Natural Landscapes & Hiking",
+        "Ethnic Minorities & Local Culture",
+        "Food & Culinary Experiences",
+        "Photography & Scenic Views"
+      ],
+      "primary_cluster": "natural_scenic",
+      "min_recommended_stay_days": 2.0,
+      "transport_hub_tier": "major",
+      "best_seasons": ["spring", "summer", "fall", "winter"],
+      "weather_risk_level": "low",
+      "crowd_level": "moderate",
+      "role_options": ["nature", "recovery"],
+      "base_description": "City of Eternal Spring with year-round mild climate, gateway to Yunnan's ethnic diversity, Stone Forest geological wonder, and highland lake scenery.",
+      "planning_effort_level": "Low",
+      "image_url": "https://images.unsplash.com/photo-1590850598735-33c93f8c5b66?w=1200"
+    }
+  ]
+}

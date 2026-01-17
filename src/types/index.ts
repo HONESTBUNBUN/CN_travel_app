@@ -136,18 +136,53 @@ export interface RecommendationState {
   viewedDestinations: string[];
 }
 
+// Dataset Types (PRD v1.3)
+export type PrimaryCluster = "urban_modern" | "historical_cultural" | "natural_scenic" | "rural_traditional";
+export type TransportHubTier = "major" | "regional" | "remote";
+export type Season = "spring" | "summer" | "fall" | "winter";
+export type WeatherRiskLevel = "low" | "moderate" | "high";
+export type CrowdLevel = "low" | "moderate" | "high" | "very_high";
+export type DestinationRole = "anchor" | "culture" | "nature" | "recovery" | "contrast";
+export type TransportMode = "high_speed_rail" | "flight" | "train" | "bus";
+export type ComfortLevel = "high" | "moderate" | "low";
+
+export interface DestinationData {
+  destination_id: string;
+  name: string;
+  name_cn: string;
+  interest_tags: string[];
+  primary_cluster: PrimaryCluster;
+  min_recommended_stay_days: number;
+  transport_hub_tier: TransportHubTier;
+  best_seasons: Season[];
+  weather_risk_level: WeatherRiskLevel;
+  crowd_level: CrowdLevel;
+  role_options: DestinationRole[];
+  base_description: string;
+  planning_effort_level: PlanningEffort;
+  image_url: string;
+}
+
+export interface TransportConnectionData {
+  origin_id: string;
+  destination_id: string;
+  mode: TransportMode;
+  duration_hours: number;
+  comfort_level: ComfortLevel;
+}
+
 // Constants
 export const INTERESTS: Interest[] = [
-  { id: "pandas", label: "Pandas", emoji: "🐼" },
-  { id: "mountains", label: "Mountains", emoji: "⛰" },
-  { id: "national-parks", label: "National parks", emoji: "🌲" },
-  { id: "temples", label: "Temples", emoji: "🏯" },
-  { id: "classical-gardens", label: "Classical gardens", emoji: "🪷" },
-  { id: "ancient-cities", label: "Ancient cities", emoji: "🧱" },
-  { id: "street-food", label: "Street food", emoji: "🌶" },
-  { id: "regional-cuisine", label: "Regional cuisine", emoji: "🍲" },
-  { id: "tea-culture", label: "Tea culture", emoji: "🫖" },
-  { id: "city-skylines", label: "City skylines", emoji: "🌃" },
-  { id: "night-markets", label: "Night markets", emoji: "🛍" },
-  { id: "high-speed-trains", label: "High-speed trains", emoji: "🚄" },
+  { id: "ancient-history-culture", label: "Ancient History & Culture", emoji: "🏛️" },
+  { id: "modern-architecture", label: "Modern Architecture & City Life", emoji: "🌃" },
+  { id: "natural-landscapes", label: "Natural Landscapes & Hiking", emoji: "⛰️" },
+  { id: "food-culinary", label: "Food & Culinary Experiences", emoji: "🍜" },
+  { id: "traditional-arts", label: "Traditional Arts & Crafts", emoji: "🎨" },
+  { id: "religious-spiritual", label: "Religious & Spiritual Sites", emoji: "🏯" },
+  { id: "ethnic-minorities", label: "Ethnic Minorities & Local Culture", emoji: "🏘️" },
+  { id: "photography-scenic", label: "Photography & Scenic Views", emoji: "📸" },
+  { id: "shopping-markets", label: "Shopping & Markets", emoji: "🛍️" },
+  { id: "nightlife-entertainment", label: "Nightlife & Entertainment", emoji: "🎭" },
+  { id: "museums-exhibitions", label: "Museums & Exhibitions", emoji: "🏛️" },
+  { id: "adventure-outdoor", label: "Adventure & Outdoor Activities", emoji: "🧗" },
 ];
