@@ -1,0 +1,263 @@
+# DECISION_ENGINE_SPEC_v0
+
+## 0. Purpose & Scope
+
+This document defines the **Decision Engine logic for MVP v0** of the China Travel Decision Support App.
+
+The decision engine is responsible for:
+- Translating user inputs into structured preference signals
+- Filtering and ranking destinations and itineraries
+- Enforcing realistic pacing constraints
+- Producing **explainable, reproducible recommendations**
+
+Out of scope for v0:
+- Free-form AI reasoning
+- Generative itinerary construction
+- Learning-based personalization
+- Optimization across bookings, prices, or availability
+
+This is a **deterministic, rules-first engine** with optional AI-assisted language rendering.
+
+---
+
+## 1. Core Principles (Non-Negotiable)
+
+1. **Explainability over optimization**  
+   Every recommendation must be traceable to user inputs and explicit rules.
+
+2. **Constraints before preferences**  
+   Realistic pacing and logistics constraints override user desires.
+
+3. **Deterministic outputs**  
+   Identical inputs must always produce identical outputs.
+
+4. **Reduction over compression**  
+   When conflicts occur, reduce scope (destinations), never compress stay duration.
+
+5. **AI is a narrator, not a decision-maker**  
+   AI may render explanations, but must not alter logic or outcomes.
+
+---
+
+## 2. Input Model
+
+### 2.1 Raw User Inputs (from Onboarding)
+
+| Field | Type | Notes |
+|-----|-----|-----|
+| first_time | boolean | Must be true to proceed |
+| interests | array[string] | Max 5 |
+| trip_days | integer | Total available days |
+| pace | enum | slow / balanced / fast |
+| planning_effort | enum | low / medium / high |
+| weather_flexibility | enum | flexible / somewhat / comfort |
+
+---
+
+### 2.2 Derived Signals (Computed)
+
+Derived signals normalize user intent into engine-friendly variables.
+
+| Signal | Type | Derivation |
+|-----|-----|-----|
+| max_destinations | integer | f(trip_days, pace) |
+| travel_tolerance | enum | g(pace, planning_effort) |
+| season_sensitivity | enum | h(weather_flexibility) |
+| preferred_experience_mix | array[string] | normalized interests |
+| fatigue_risk | enum | f(trip_days, pace, travel_tolerance) |
+
+Example (illustrative):
+- 7 days + slow pace → max_destinations = 3
+- fast pace + high effort → travel_tolerance = high
+
+---
+
+## 3. Content Model (Required Fields)
+
+### 3.1 Destination Entity
+
+Each destination MUST define the following fields:
+
+| Field | Type |
+|-----|-----|
+| id | string |
+| name | string |
+| interest_tags | array[string] |
+| best_seasons | array[season] |
+| pacing_fit | array[pace] |
+| logistics_effort | enum (low/medium/high) |
+| good_to_know_pool | array[string] |
+| role_candidates | array[role] |
+
+Roles include: anchor, culture, nature, contrast, recovery.
+
+---
+
+### 3.2 Itinerary Entity (Predefined)
+
+MVP v0 uses **predefined itineraries**, not generated routes.
+
+| Field | Type |
+|-----|-----|
+| id | string |
+| title | string |
+| route | ordered array[destination_id] |
+| min_days | integer |
+| max_days | integer |
+| pace_fit | enum |
+| coverage_tags | array[string] |
+| travel_segments | array[{from,to,duration_hours}] |
+| city_roles | map[destination_id → role] |
+
+---
+
+## 4. Decision Flow Overview
+
+The engine runs in **three sequential stages**:
+
+1. **Hard Filtering** (non-negotiable constraints)
+2. **Scoring & Ranking** (soft preferences)
+3. **Conflict Resolution & Output Assembly**
+
+At no stage may later steps override earlier constraints.
+
+---
+
+## 5. Stage 1 — Hard Filters
+
+Hard filters remove any destination or itinerary that violates constraints.
+
+### 5.1 Global Filters
+
+- first_time must be true
+- itinerary.min_days ≤ trip_days ≤ itinerary.max_days
+
+---
+
+### 5.2 Pacing & Logistics Filters (Mandatory)
+
+- Arrival day counts as partial / non-exploration day
+- Inter-city travel > 3h counts as half or full travel day
+- No more than **one consecutive city change** per itinerary
+- Each destination must have ≥ 1.5–2 days effective stay
+- Destination count ≤ max_destinations
+
+Failure → itinerary is discarded.
+
+---
+
+### 5.3 Seasonal Filters
+
+If season_sensitivity = comfort:
+- Discard destinations where current season ∉ best_seasons
+
+If flexible:
+- Seasonal mismatch allowed, but flagged for explanation.
+
+---
+
+## 6. Stage 2 — Scoring & Ranking
+
+Remaining candidates are ranked using weighted scoring.
+
+### 6.1 Scoring Dimensions (v0)
+
+| Dimension | Description |
+|-----|-----|
+| interest_match | overlap with user interests |
+| pace_fit | alignment with preferred pace |
+| effort_fit | logistics effort vs tolerance |
+| experience_balance | diversity across tags |
+| fatigue_mitigation | avoids excessive travel |
+
+Each dimension scores 0–1.
+
+---
+
+### 6.2 Weighting (Initial Defaults)
+
+| Dimension | Weight |
+|-----|-----|
+| interest_match | 0.35 |
+| pace_fit | 0.25 |
+| effort_fit | 0.15 |
+| experience_balance | 0.15 |
+| fatigue_mitigation | 0.10 |
+
+Weights are tunable but must sum to 1.
+
+---
+
+### 6.3 Deterministic Tie-Breaking
+
+When scores are within ε:
+1. Prefer fewer destinations
+2. Prefer lower logistics effort
+3. Stable ordering by itinerary id
+
+---
+
+## 7. Stage 3 — Conflict Resolution
+
+When user intent conflicts with constraints:
+
+| Conflict | Resolution Strategy |
+|-----|-----|
+| Too many interested destinations | Drop lowest-scoring |
+| Pace too slow for route | Switch to lower-travel itinerary |
+| High interest, low time | Reduce scope, not duration |
+| Seasonal mismatch | Allow but surface clearly |
+
+Conflict handling must be logged for explanation.
+
+---
+
+## 8. Explainability Contract
+
+### 8.1 Required Explanation Components
+
+Each recommendation MUST include:
+
+1. **Input References**
+   - interests
+   - trip_days
+   - pace
+2. **Rule References**
+   - pacing constraints applied
+   - filters triggered
+3. **Trade-offs**
+   - what was prioritized
+   - what was reduced or excluded
+
+---
+
+### 8.2 Explanation Template Structure
+
+Explanations are assembled from structured components:
+
+- Because you selected `{interests}`...
+- Given your `{pace}` pace and `{trip_days}` days...
+- To keep the journey realistic, this plan limits...
+- Trade-off: you gain `{benefit}`, but give up `{cost}`.
+
+AI may rewrite wording, but **must not change content**.
+
+---
+
+## 9. Output Contract (Simplified)
+
+### 9.1 Itinerary Output
+
+```json
+{
+  "itinerary_id": "string",
+  "title": "string",
+  "route": ["cityA", "cityB"],
+  "days": 7,
+  "pace": "balanced",
+  "explanation": {
+    "input_refs": [],
+    "rules_applied": [],
+    "tradeoffs": []
+  }
+}

@@ -52,7 +52,7 @@ next-env.d.ts
 .LSOverride
 
 # Claude Code
-.claude/
+
 
 # Images (optional - uncomment if you want to ignore large image files)
 # *.png
