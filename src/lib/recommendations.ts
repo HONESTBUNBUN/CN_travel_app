@@ -1,5 +1,26 @@
 import type { UserInputs, Destination } from "@/types";
-import { mockDestinations } from "@/data/mockDestinations";
+import { destinations } from "@/data/destinationAdapter";
+
+// Interest ID to Tag mapping (user stores IDs, dataset stores tags)
+const INTEREST_ID_TO_TAG: Record<string, string> = {
+  'ancient-history-culture': 'Ancient History & Culture',
+  'modern-architecture': 'Modern Architecture & City Life',
+  'natural-landscapes': 'Natural Landscapes & Hiking',
+  'food-culinary': 'Food & Culinary Experiences',
+  'traditional-arts': 'Traditional Arts & Crafts',
+  'religious-spiritual': 'Religious & Spiritual Sites',
+  'ethnic-minorities': 'Ethnic Minorities & Local Culture',
+  'photography-scenic': 'Photography & Scenic Views',
+  'shopping-markets': 'Shopping & Markets',
+  'nightlife-entertainment': 'Nightlife & Entertainment',
+  'museums-exhibitions': 'Museums & Exhibitions',
+  'adventure-outdoor': 'Adventure & Outdoor Activities',
+};
+
+// Convert user interest IDs to destination tags
+function mapInterestIdsToTags(interestIds: string[]): string[] {
+  return interestIds.map(id => INTEREST_ID_TO_TAG[id] || id);
+}
 
 /**
  * Recommendation Logic (Fixed)
@@ -97,7 +118,8 @@ function getDiversityScore(
   destination: Destination,
   selectedRegions: Map<string, number>
 ): number {
-  const regionCount = selectedRegions.get(destination.region) || 0;
+  const region = destination.region || 'Unknown';
+  const regionCount = selectedRegions.get(region) || 0;
 
   if (regionCount === 0) {
     return 10; // New region - highest priority
@@ -173,14 +195,17 @@ export function getRecommendedDestinations(inputs: Partial<UserInputs>): {
     };
   }
 
-  // Step 1: Filter by interests (must match at least 1)
-  const filtered = mockDestinations.filter((destination) =>
+  // Step 1: Convert user interest IDs to destination tags for matching
+  const userInterestTags = mapInterestIdsToTags(inputs.interests!);
+
+  // Step 2: Filter by interests (must match at least 1)
+  const filtered = destinations.filter((destination) =>
     destination.matchingInterests.some((interest) =>
-      inputs.interests!.includes(interest)
+      userInterestTags.includes(interest)
     )
   );
 
-  // Step 2: Handle edge cases
+  // Step 3: Handle edge cases
   if (filtered.length === 0) {
     return {
       destinations: [],
@@ -191,9 +216,9 @@ export function getRecommendedDestinations(inputs: Partial<UserInputs>): {
 
   if (filtered.length < 3) {
     // Relaxation: include nearby destinations from same regions
-    const regions = new Set(filtered.map((d) => d.region));
-    const relaxed = mockDestinations.filter(
-      (d) => regions.has(d.region) && !filtered.includes(d)
+    const regions = new Set(filtered.map((d) => d.region || 'Unknown'));
+    const relaxed = destinations.filter(
+      (d) => regions.has(d.region || 'Unknown') && !filtered.includes(d)
     );
 
     const combined = [...filtered, ...relaxed.slice(0, 8 - filtered.length)];
@@ -205,7 +230,7 @@ export function getRecommendedDestinations(inputs: Partial<UserInputs>): {
     };
   }
 
-  // Step 3: Score all filtered destinations
+  // Step 4: Score all filtered destinations
   const regionCounts = new Map<string, number>();
 
   const scored: ScoredDestination[] = filtered.map((destination) => {
@@ -220,7 +245,7 @@ export function getRecommendedDestinations(inputs: Partial<UserInputs>): {
     totalScore += diversityScore * 0.35;
 
     // Interest strength (25% weight = max 10 points * 0.25 = 2.5)
-    const interestScore = getInterestScore(destination, inputs.interests!);
+    const interestScore = getInterestScore(destination, userInterestTags);
     totalScore += interestScore * 0.25;
 
     // Pace bonus (up to 5 extra points)
@@ -230,7 +255,7 @@ export function getRecommendedDestinations(inputs: Partial<UserInputs>): {
     totalScore += getEffortScore(destination, inputs.planningEffort);
 
     const interestMatches = destination.matchingInterests.filter((interest) =>
-      inputs.interests!.includes(interest)
+      userInterestTags.includes(interest)
     ).length;
 
     return {
@@ -256,23 +281,25 @@ export function getRecommendedDestinations(inputs: Partial<UserInputs>): {
   for (const { destination } of scored) {
     if (selected.length >= 8) break;
 
+    const region = destination.region || 'Unknown';
     // Track region distribution
-    const regionCount = selectedRegions.get(destination.region) || 0;
-    selectedRegions.set(destination.region, regionCount + 1);
+    const regionCount = selectedRegions.get(region) || 0;
+    selectedRegions.set(region, regionCount + 1);
 
     selected.push(destination);
 
     // Update diversity score for remaining destinations
-    regionCounts.set(destination.region, regionCount + 1);
+    regionCounts.set(region, regionCount + 1);
   }
 
   // Step 6: Alternate regions for display order (avoid clustering)
   const byRegion = new Map<string, Destination[]>();
   selected.forEach((d) => {
-    if (!byRegion.has(d.region)) {
-      byRegion.set(d.region, []);
+    const region = d.region || 'Unknown';
+    if (!byRegion.has(region)) {
+      byRegion.set(region, []);
     }
-    byRegion.get(d.region)!.push(d);
+    byRegion.get(region)!.push(d);
   });
 
   const alternated: Destination[] = [];

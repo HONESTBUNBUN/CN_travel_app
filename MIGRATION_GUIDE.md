@@ -64,30 +64,36 @@ console.log('Real cities:', realDestinations.map(d => d.name));
 
 ## Full Migration Checklist
 
-### Phase 1: Onboarding (Immediate)
+### Phase 1: Onboarding (Immediate) ✅ COMPLETE
 - [x] Update `INTERESTS` constant (already done in `/src/types/index.ts`)
-- [ ] Test Q2 displays 12 new interests correctly
-- [ ] Verify interest IDs saved match new format
+- [x] Test Q2 displays 12 new interests correctly
+- [x] Verify interest IDs saved match new format
 
-### Phase 2: Recommendations (Week 1)
-- [ ] Replace `mockDestinations` with adapter in recommendations page
-- [ ] Test filtering by interests works
-- [ ] Verify "Why this fits" generates correctly
-- [ ] Test "Interested" limit of 5 destinations
+### Phase 2: Recommendations ✅ COMPLETE (2026-01-18)
+- [x] Replace `mockDestinations` with adapter in recommendations logic
+- [x] Add interest ID-to-tag mapping for filtering
+- [x] Test filtering by interests works
+- [x] Verify "Why this fits" generates correctly
+- [x] Test "Interested" limit of 5 destinations
 
-### Phase 3: Itinerary Generation (Week 2)
+**Changes made:**
+- Updated `/src/lib/recommendations.ts` to import from `destinationAdapter`
+- Added `INTEREST_ID_TO_TAG` mapping and `mapInterestIdsToTags()` function
+- Fixed TypeScript errors for optional `region` field
+
+### Phase 3: Itinerary Generation (Next)
 - [ ] Implement route builder using `transportConnections.json`
 - [ ] Apply pacing constraints (FR-36 through FR-43)
 - [ ] Use destination `role_options` for journey structure
 - [ ] Generate day-by-day itineraries
 
-### Phase 4: Explanation Generation (Week 3)
+### Phase 4: Explanation Generation
 - [ ] Integrate AI for "Why this fits" explanations
 - [ ] Generate trade-off explanations
 - [ ] Create day-level narratives
 - [ ] Validate explanations reference user inputs
 
-### Phase 5: Production Ready (Week 4)
+### Phase 5: Production Ready
 - [ ] Remove mock data files
 - [ ] Add tests for recommendation engine
 - [ ] Document recommendation logic
@@ -124,9 +130,9 @@ import { destinationsById } from "@/data/destinationAdapter";
 const dest = destinationsById['beijing'];
 ```
 
-### Pattern 3: Filtering by Interest
+### Pattern 3: Filtering by Interest (Updated for Phase 2)
 
-**Before:**
+**Before (old interest IDs):**
 ```typescript
 const filtered = mockDestinations.filter(d =>
   d.matchingInterests.some(interest =>
@@ -135,13 +141,25 @@ const filtered = mockDestinations.filter(d =>
 );
 ```
 
-**After (same, adapter handles mapping):**
+**After (with ID-to-tag mapping):**
 ```typescript
 import { destinations } from "@/data/destinationAdapter";
 
+// Interest ID to Tag mapping
+const INTEREST_ID_TO_TAG: Record<string, string> = {
+  'ancient-history-culture': 'Ancient History & Culture',
+  'modern-architecture': 'Modern Architecture & City Life',
+  // ... see full mapping in recommendations.ts
+};
+
+function mapInterestIdsToTags(interestIds: string[]): string[] {
+  return interestIds.map(id => INTEREST_ID_TO_TAG[id] || id);
+}
+
+const userInterestTags = mapInterestIdsToTags(userInputs.interests);
 const filtered = destinations.filter(d =>
   d.matchingInterests.some(interest =>
-    userInputs.interests.includes(interest)
+    userInterestTags.includes(interest)
   )
 );
 ```
@@ -178,19 +196,22 @@ The adapter automatically maps between old interest IDs and new interest tags:
 | `tea-culture` | Traditional Arts & Crafts |
 | `high-speed-trains` | Modern Architecture & City Life |
 
-**New interest IDs (recommended for new code):**
-- `ancient-history-culture`
-- `modern-architecture`
-- `natural-landscapes`
-- `food-culinary`
-- `traditional-arts`
-- `religious-spiritual`
-- `ethnic-minorities`
-- `photography-scenic`
-- `shopping-markets`
-- `nightlife-entertainment`
-- `museums-exhibitions`
-- `adventure-outdoor`
+**New interest IDs (used in current implementation):**
+
+| Interest ID | Interest Tag |
+|-------------|--------------|
+| `ancient-history-culture` | Ancient History & Culture |
+| `modern-architecture` | Modern Architecture & City Life |
+| `natural-landscapes` | Natural Landscapes & Hiking |
+| `food-culinary` | Food & Culinary Experiences |
+| `traditional-arts` | Traditional Arts & Crafts |
+| `religious-spiritual` | Religious & Spiritual Sites |
+| `ethnic-minorities` | Ethnic Minorities & Local Culture |
+| `photography-scenic` | Photography & Scenic Views |
+| `shopping-markets` | Shopping & Markets |
+| `nightlife-entertainment` | Nightlife & Entertainment |
+| `museums-exhibitions` | Museums & Exhibitions |
+| `adventure-outdoor` | Adventure & Outdoor Activities |
 
 ## Testing Checklist
 
@@ -201,10 +222,10 @@ The adapter automatically maps between old interest IDs and new interest tags:
 - [ ] Pace mapping (slow/balanced/fast) works correctly
 
 ### Integration Tests Needed
-- [ ] Onboarding → Recommendations flow
-- [ ] Interest selection → Filtered destinations
-- [ ] "Interested" limit enforcement (max 5)
-- [ ] Destination detail view displays correctly
+- [x] Onboarding → Recommendations flow (tested 2026-01-18)
+- [x] Interest selection → Filtered destinations (tested 2026-01-18)
+- [x] "Interested" limit enforcement (max 5) (tested 2026-01-18)
+- [x] Destination detail view displays correctly (tested 2026-01-18)
 
 ### Validation Tests
 - [ ] Run `npx tsx scripts/validate-dataset.ts` passes
@@ -225,8 +246,8 @@ If issues arise during migration:
    The new interests are backward compatible - old destinations can still use them.
 
 3. **Gradual rollout:**
-   - Week 1: New interests only
-   - Week 2: New interests + adapter for 20 cities
+   - ~~Week 1: New interests only~~ ✅ Done
+   - ~~Week 2: New interests + adapter for 20 cities~~ ✅ Done
    - Week 3: Full dataset + recommendation engine
    - Week 4: Remove mock data
 
@@ -261,10 +282,10 @@ If issues arise during migration:
 
 Once migration is complete:
 
-1. **Implement Recommendation Engine**
-   - Use destination `interest_tags` for matching
-   - Apply `primary_cluster` diversity constraints (max 40% per cluster)
-   - Calculate scores using PRD scoring formula
+1. **Implement Recommendation Engine** ✅ Phase 2 Complete
+   - [x] Use destination `interest_tags` for matching
+   - [ ] Apply `primary_cluster` diversity constraints (max 40% per cluster)
+   - [x] Calculate scores using PRD scoring formula
 
 2. **Build Itinerary Generator**
    - Use `transportConnections.json` for routing
@@ -280,5 +301,3 @@ Once migration is complete:
    - Implement validation for generated itineraries
    - Output rules_audit JSON for testing
    - Validate against FR-36 through FR-43
-
-Good luck with the migration! 🚀
